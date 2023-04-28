@@ -1,9 +1,39 @@
 body
 {
-    background-color: #303234 ;
+    background-color: #1a1c22 ;
 }
 .container-fluid
 {
-    height: 80px;
-    font-size: 25px;
+    height: 100px;
+    font-size: 23px;
+    padding-left: 10%;
+}
+.navbar-nav > li{
+    padding-left:15px;
+    padding-right:15px;
+}
+
+#homeNavbar
+{
+    padding-left: 60%;
+}
+#booking
+{
+    padding-top: 12%;
+    padding-left: 10%;
+    font-size: 55px;
+}
+#appfor
+{
+    padding-left: 10%;
+    color: #8b8e93;
+}
+#autoPic
+{
+    width: 78%;
+    height: 100%;
+}
+.container
+{
+    max-width: 90%;
 }
