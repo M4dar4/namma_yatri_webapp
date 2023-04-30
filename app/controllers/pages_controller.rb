@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   def book
     @latitude = session[:latitude] || 12.972442
     @longitude = session[:longitude] || 77.580643
-    @api_key = 'AIzaSyA8UjIWteUt1xcSNbBTBdP1ysEj2vTXhiE'
+    @api_key = 'GOOGLE_MAPS_API_KEY'
   end
 
   def update_latitude
