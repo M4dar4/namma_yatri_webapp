@@ -4,4 +4,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root 'pages#main'
+  post 'pages/update_latitude'
+  get 'book', to: 'pages#book'
+  get '/pages/booked', to: 'pages#booked'
 end

@@ -1,0 +1,39 @@
+<%= stylesheet_link_tag 'custom'%>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a alt="Namma Yatri" href="https://nammayatri.in/"><%= image_tag('nammaYatrilogo.png', :size => "126x40")%></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mr-auto" id="bookedNavbar">
+        <li class="nav-item">
+          <a class="nav-link active text-white" aria-current="page" href="https://nammayatri.in/">Home</a>
+        </li>
+        <li class="nav-item ">
+          <a class="nav-link text-white" href="https://nammayatri.in/about/">About us</a>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container">
+ <div class="row">
+ <div class="col-sm w-100">
+ <h1 class="text-warning font-weight-bold" id="booked">
+   Your Auto has been <span class="text-success">Booked successfully</span>
+ </h1>
+ </br>
+ <p class="text-white" style="margin-left: 85px; margin-top: 20px; font-size: 20px">Name: <span id="name-placeholder">[Name]</span></p>
+ <p class="text-white" style="margin-left: 85px; margin-top: 10px; font-size: 20px">Auto Plate: <span id="numberplate-placeholder">[Number Plate]</span></p>
+ <p class="text-white" style="margin-left: 85px; margin-top: 10px; font-size: 20px">Phone Number: <span id="phonenumber-placeholder">[Phone Number]</span></p>
+ <p id="download" style="margin-left: 85px; margin-top: 10px; font-size: 22px">If you enjoyed your ride make sure to download the app</p>
+ <a href="https://play.google.com/store/apps/details?id=in.juspay.nammayatri" type="button" class="btn btn-outline-warning btn-lg" style="width: 250px; margin-left: 80px; margin-top: 20px">Download the app</a>
+</div>
+
+    <div class="col-sm"><%= image_tag('autoPic.png', :alt=>"",:class=>"float-end", style: "margin-top: 130px")%></div>
+  </div>
+</div>

@@ -71,6 +71,8 @@ group :test do
   gem "webdrivers"
 end
 
-gem 'bootstrap', '~> 5.1.3'
-
 gem "cssbundling-rails", "~> 1.1"
+gem 'bootstrap', '~> 5.1.3'
+gem 'geocoder'
+gem 'gmaps'
+gem 'gmaps4rails'

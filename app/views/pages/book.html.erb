@@ -1,0 +1,178 @@
+<%= stylesheet_link_tag 'custom' %>
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <a alt="Namma Yatri" href="https://nammayatri.in/"><%= image_tag('nammaYatrilogo.png', size: "126x40") %></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="ml-auto">
+      <div class="input-group mb-3" style="width: 300px;margin-left: 300px;">
+        <input class="form-control" type="text" id="phone-input" placeholder="Phone Number" style="height: 50px;">
+      </div>
+    </div>
+
+    <div class="input-group mb-3">
+      <input id="search" type="text" class="form-control" placeholder="Destination" aria-label="Recipient's username" aria-describedby="basic-addon2" style="margin-left: 60px">
+      <div class="input-group-append" style="margin-left: 30px;margin-right: 50px;">
+        <%= link_to "Book Now", "/pages/booked", class: "btn btn-outline-warning", style: "width: 150px; height: 50px; font-size: 20px;", id: "book-now-button" %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+$(document).ready(function() {
+  $('#book-now-button').click(function(e) {
+    e.preventDefault();
+
+    $.ajax({
+      url: '/pages/booked',
+      type: 'GET',
+      success: function(response) {
+        $('body').html(response);
+      },
+      error: function() {
+        alert('An error occurred while loading the page.');
+      }
+    });
+  });
+});
+</script>
+
+<script>
+  document.getElementById('phone-input').addEventListener('input', function(e) {
+    e.target.value = e.target.value.replace(/\D/g, '');
+  });
+</script>
+
+
+
+
+
+<div id="map" style="height: 800px;width: 90%;margin-left: 5%"></div>
+<script src="https://unpkg.com/@hotwired/stimulus@3.1.0/dist/stimulus.umd.js"></script>
+<script src="/path/to/geolocation_controller.js" data-controller="geolocation"></script>
+
+<script>
+  var searchedMarker = null; // Initialize searchedMarker as null
+
+  function initMap() {
+    var currentLocation = { lat: <%= @latitude %>, lng: <%= @longitude %> };
+    var map = new google.maps.Map(document.getElementById('map'), {
+      center: currentLocation,
+      zoom: 15
+    });
+
+    var currentMarker = new google.maps.Marker({
+      position: currentLocation,
+      map: map,
+      title: 'Your Location',
+      icon: {
+        path: google.maps.SymbolPath.CIRCLE,
+        fillColor: 'green',
+        fillOpacity: 1,
+        strokeColor: 'white',
+        strokeWeight: 2,
+        scale: 10
+      }
+    });
+
+    map.addListener('click', function(event) {
+      var clickedLocation = event.latLng;
+
+      // Remove the previous searched marker, if it exists
+      if (searchedMarker) {
+        searchedMarker.setMap(null);
+      }
+
+      searchedMarker = new google.maps.Marker({
+        position: clickedLocation,
+        map: map,
+        title: 'Selected Location',
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'red',
+          fillOpacity: 1,
+          strokeColor: 'white',
+          strokeWeight: 2,
+          scale: 10
+        }
+      });
+
+      // Update the search input value with the clicked location coordinates
+      var input = document.getElementById('search');
+      input.value = clickedLocation.lat() + ', ' + clickedLocation.lng();
+
+      // Send latitude and longitude to the server
+      var latitude = clickedLocation.lat();
+      var longitude = clickedLocation.lng();
+      sendLocationToServer(latitude, longitude);
+    });
+
+    var input = document.getElementById('search');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    autocomplete.bindTo('bounds', map);
+
+    autocomplete.addListener('place_changed', function() {
+      var place = autocomplete.getPlace();
+      if (!place.geometry) {
+        window.alert("No details available for input: '" + place.name + "'");
+        return;
+      }
+
+      var searchedLocation = place.geometry.location;
+      map.setCenter(searchedLocation);
+
+      // Remove the previous searched marker, if it exists
+      if (searchedMarker) {
+        searchedMarker.setMap(null);
+      }
+
+      searchedMarker = new google.maps.Marker({
+        position: searchedLocation,
+        map: map,
+        title: place.name,
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          fillColor: 'red',
+          fillOpacity: 1,
+          strokeColor: 'white',
+          strokeWeight: 2,
+          scale: 10
+        }
+      });
+
+      // Send latitude and longitude to the server
+      var latitude = searchedLocation.lat();
+      var longitude = searchedLocation.lng();
+      sendLocationToServer(latitude, longitude);
+    });
+  }
+
+  function sendLocationToServer(latitude, longitude) {
+    var url = '/locations'; // Replace with your server-side endpoint URL
+    var data = {
+      latitude: latitude,
+      longitude: longitude
+    };
+
+    // Make an AJAX request to the server
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: data,
+        success: function(response) {
+          // Handle the server response here
+          console.log(response);
+        },
+        error: function(error) {
+          // Handle the error here
+          console.error(error);
+        }
+      });
+    }
+  </script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=<%= @api_key %>&libraries=places&callback=initMap"></script>

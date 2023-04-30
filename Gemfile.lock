@@ -98,8 +98,11 @@ GEM
     erubi (1.12.0)
     execjs (2.8.1)
     ffi (1.15.5)
+    geocoder (1.8.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    gmaps (0.0.1)
+    gmaps4rails (2.1.2)
     i18n (1.13.0)
       concurrent-ruby (~> 1.0)
     importmap-rails (1.1.6)
@@ -234,6 +237,9 @@ DEPENDENCIES
   capybara
   cssbundling-rails (~> 1.1)
   debug
+  geocoder
+  gmaps
+  gmaps4rails
   importmap-rails
   jbuilder
   puma (~> 5.0)
